@@ -1,0 +1,6 @@
+import java.util.concurrent.atomic.AtomicInteger;public class Main {public static void main(String[] args)throws InterruptedException{(new p()).z();}}class a{private int i;synchronized void b(){i++;}public int c(){return i;}}class c extends
+Thread{private static int c=1;private int d;private final Object f;private c(int g,Object h){this.d=g;this.f=h;}public static void e(){Object k=new Object();for(int l=c;l<10;++l){Thread m=new c(l,k);m.start();}}public
+void run(){System.out.println("Стартовал поток "+d);synchronized(f){while(d>c){try{f.wait();System.out.println("После wait'a "+d);}catch(InterruptedException e){e.printStackTrace();}}c++;System.out.println("Отработал поток "+d);f.notifyAll();}}}class n
+extends Thread{public void run(){System.out.println(Thread.currentThread().getName());}public static void l(){for(int l=0;l
+<10;l++){Thread m=new n();m.start();}}}class o extends Thread{private final p t;private final a v;o(p q,a r){this.t=q;this.v=r;}public void run(){while (!t.y()){v.b();}}}class p{private static final int s=100000000;private AtomicInteger u=new AtomicInteger();private a x=new a();boolean y(){return u.incrementAndGet()>s;}public void z() throws
+InterruptedException{o zz=new o(this,x);o zt=new o(this,x);zz.start();zt.start();zz.join();zt.join();System.out.println("Expected: "+s);System.out.println("Result: "+x.c());}}
